@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "IITKGP ERP Feedback Automator",
+  "version": "1.6",
+  "description": "Automates feedback form answering exclusively on the IIT Kharagpur ERP portal with custom sentiment ratings.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "IITKGP ERP Feedback Automator"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://erp.iitkgp.ac.in/*",
+    "*://*.iitkgp.ac.in/*",
+    "*://*.iitkgp.ernet.in/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://erp.iitkgp.ac.in/*",
+        "*://*.iitkgp.ac.in/*",
+        "*://*.iitkgp.ernet.in/*"
+      ],
+      "js": ["content.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ]
+}

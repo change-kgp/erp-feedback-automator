@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IITKGP ERP Feedback Automator</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    body {
+      width: 320px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      background: #0f172a;
+      color: #f8fafc;
+      padding: 16px;
+    }
+    .header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #1e293b;
+      padding-bottom: 10px;
+    }
+    .logo-badge {
+      background: linear-gradient(135deg, #e11d48, #be123c);
+      width: 34px;
+      height: 34px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      box-shadow: 0 4px 10px rgba(225, 29, 72, 0.4);
+    }
+    .title-group h1 {
+      font-size: 15px;
+      font-weight: 700;
+      color: #f1f5f9;
+      line-height: 1.2;
+    }
+    .title-group p {
+      font-size: 11px;
+      color: #94a3b8;
+    }
+    .section-title {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 8px;
+      font-weight: 600;
+    }
+    .sentiment-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 12px;
+    }
+    .sentiment-btn {
+      width: 100%;
+      border: none;
+      padding: 10px 14px;
+      border-radius: 8px;
+      font-size: 13.5px;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+    .sentiment-btn:hover {
+      transform: translateY(-1px);
+      filter: brightness(1.1);
+    }
+    .sentiment-btn:active {
+      transform: translateY(1px);
+    }
+    .btn-good {
+      background: linear-gradient(135deg, #059669, #047857);
+      box-shadow: 0 4px 10px rgba(5, 150, 105, 0.35);
+    }
+    .btn-neutral {
+      background: linear-gradient(135deg, #d97706, #b45309);
+      box-shadow: 0 4px 10px rgba(217, 119, 6, 0.35);
+    }
+    .btn-worse {
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+    }
+    .status-box {
+      margin-top: 8px;
+      padding: 10px 12px;
+      border-radius: 6px;
+      background: #1e293b;
+      border: 1px solid #334155;
+      font-size: 12px;
+      color: #cbd5e1;
+      display: none;
+      line-height: 1.4;
+    }
+    .status-box.success {
+      display: block;
+      background: rgba(16, 185, 129, 0.15);
+      border-color: #059669;
+      color: #6ee7b7;
+    }
+    .status-box.warning {
+      display: block;
+      background: rgba(245, 158, 11, 0.15);
+      border-color: #d97706;
+      color: #fcd34d;
+    }
+    .steps-card {
+      margin-top: 12px;
+      background: #1e293b;
+      border-radius: 8px;
+      padding: 10px 12px;
+      border: 1px solid #334155;
+    }
+    .steps-card h2 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #94a3b8;
+      margin-bottom: 6px;
+    }
+    .steps-card ol {
+      padding-left: 16px;
+      font-size: 11px;
+      color: #cbd5e1;
+      line-height: 1.6;
+    }
+    .footer {
+      margin-top: 12px;
+      text-align: center;
+    }
+    .secondary-btn {
+      background: transparent;
+      border: 1px dashed #475569;
+      color: #94a3b8;
+      padding: 6px 10px;
+      font-size: 11px;
+      border-radius: 6px;
+      cursor: pointer;
+      width: 100%;
+      transition: all 0.2s;
+    }
+    .secondary-btn:hover {
+      border-color: #94a3b8;
+      color: #f1f5f9;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <div class="logo-badge">⚡</div>
+    <div class="title-group">
+      <h1>IITKGP ERP Feedback</h1>
+      <p>Custom Sentiment Form Filler</p>
+    </div>
+  </div>
+
+  <div class="section-title">Select Rating Mood:</div>
+
+  <div class="sentiment-grid">
+    <button class="sentiment-btn btn-good" data-sentiment="good">
+      <span>😊 Good / Excellent</span>
+      <span>⚡ Top Ratings</span>
+    </button>
+    <button class="sentiment-btn btn-neutral" data-sentiment="neutral">
+      <span>😐 Neutral / Average</span>
+      <span>⚖️ Balanced</span>
+    </button>
+    <button class="sentiment-btn btn-worse" data-sentiment="worse">
+      <span>🙁 Critical / Poor</span>
+      <span>🔻 Needs Work</span>
+    </button>
+  </div>
+
+  <div id="status" class="status-box"></div>
+
+  <div class="steps-card">
+    <h2>Instructions</h2>
+    <ol>
+      <li>Select Subject & click <strong>Faculty Name</strong>.</li>
+      <li>Choose <strong>Good</strong>, <strong>Neutral</strong>, or <strong>Critical</strong>.</li>
+      <li>Type visual captcha and click <strong>Submit</strong>!</li>
+    </ol>
+  </div>
+
+  <div class="footer">
+    <button id="copy-bookmarklet-btn" class="secondary-btn">📋 Copy 1-Click Bookmarklet Code</button>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>
